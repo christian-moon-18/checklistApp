@@ -1,0 +1,63 @@
+/* CSS styles for components/ChecklistItem.module.css */
+
+/* Gmail-like inbox item container */
+.inbox-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #3846c2;
+  }
+  
+  /* Checkbox on the left */
+  .inbox-item input[type='checkbox'] {
+    margin-right: 10px;
+  }
+  
+  /* Inbox item content (subject and body) */
+  .inbox-item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Subject line (title) */
+  .inbox-item-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #3846c2;
+  }
+  
+  /* Body (description) */
+  .inbox-item-body {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+  }
+  
+  /* Strikethrough effect for completed items */
+  .inbox-item.completed .inbox-item-title,
+  .inbox-item.completed .inbox-item-body {
+    text-decoration: line-through;
+  }
+  
+  /* Delete button */
+  .inbox-item-delete {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  /* Rounded and bigger input */
+  .inbox-item-content input[type='text'] {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #66eb0d;
+    margin-top: 20px;
+    width: 100%; /* Adjust the width as needed */
+  }
+  

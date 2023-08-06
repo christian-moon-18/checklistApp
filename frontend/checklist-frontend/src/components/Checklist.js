@@ -54,7 +54,7 @@ const Checklist = () => {
 
   return (
     <div>
-      <h1>Checklist App</h1>
+      <h1>Items</h1>
       <AddItemForm onAddItem={handleAddItem} />
       <ul>
         {checklistItems.map((item) => (

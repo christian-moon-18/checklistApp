@@ -1,6 +1,7 @@
 // components/ChecklistItem.js
 
 import React from 'react';
+import styles from './ChecklistItem.module.css';
 
 const ChecklistItem = ({ item, onUpdateStatus, onDeleteItem }) => {
   const { id, title, description, status } = item;
@@ -14,19 +15,29 @@ const ChecklistItem = ({ item, onUpdateStatus, onDeleteItem }) => {
     onDeleteItem(id);
   };
 
+  const isCompleted = status === 'completed';
+
   return (
-    <li>
+    <div className={`${styles['inbox-item']} ${isCompleted ? styles['completed'] : ''}`}>
       <input
         type="checkbox"
-        checked={status === 'completed'}
+        checked={isCompleted}
         onChange={handleStatusChange}
       />
-      <div>
-        <h3>{title}</h3>
-        {description && <p>{description}</p>} {/* Show description if available */}
+      <div className={styles['inbox-item-content']}>
+        <div className={styles['inbox-item-title']}>
+          <span className={isCompleted ? styles['completed-text'] : ''}>{title}</span>
+        </div>
+        {description && (
+          <div className={styles['inbox-item-body']}>
+            <span className={isCompleted ? styles['completed-text'] : ''}>{description}</span>
+          </div>
+        )}
       </div>
-      <button onClick={handleDelete}>Delete</button>
-    </li>
+      <button className={styles['inbox-item-delete']} onClick={handleDelete}>
+        Delete
+      </button>
+    </div>
   );
 };
 
