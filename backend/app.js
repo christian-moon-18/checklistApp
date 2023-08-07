@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
 const app = express();
+const ngrok = require('ngrok');
+const PORT = 3001;
 
 app.use(express.json());
 app.use(cors());
@@ -11,8 +13,6 @@ app.use(cors());
 app.get('/', (req, res) => {
     res.send('Hello, Express!');
 });
-
-
 
 const pool = new Pool({
     user: 'postgres',
@@ -77,8 +77,16 @@ app.delete('/api/checklist/:id', async (req, res) => {
     }
 });
 
-
-const PORT = 3001;
-app.listen(PORT, () => {
+// Start the server
+app.listen(PORT, async () => {
   console.log(`Server is running on http://localhost:${PORT}`);
+
+  try {
+    // Expose the server to the internet using ngrok
+    const url = await ngrok.connect(PORT);
+    console.log('Server is publicly accessible at:', url);
+  } catch (err) {
+    console.error('Error while connecting to ngrok:', err);
+    process.exit(1);
+  }
 });
