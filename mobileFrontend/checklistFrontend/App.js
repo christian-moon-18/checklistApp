@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
-    color: 'purple',
+    color: 'blue',
   },
   scrollContainer: {
     flex: 1,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
-    backgroundColor: 'white',
+    backgroundColor: 'gray',
     flexDirection: 'row', // Added to align checkbox and text horizontally
     alignItems: 'center', // Added to center the checkbox vertically
   },
@@ -99,20 +99,24 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'blue',
+    color: 'white',
   },
   description: {
     flex: 1,
     fontSize: 16,
-    color: 'black',
+    color: 'white',
   },
   checkedText: {
     textDecorationLine: 'line-through',
     color: 'gray',
   },
   deleteButton: {
-    color: 'red',
+    color: 'white',
     marginLeft: 16,
+    backgroundColor: 'red',
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
 });
 
