@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import axios from 'axios';
 import CheckBox from '@react-native-community/checkbox';
 
 const App = () => {
   const [checklistItems, setChecklistItems] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
+  const [newItemTitle, setNewItemTitle] = useState('');
+  const [newItemDescription, setNewItemDescription] = useState('');
 
   const fetchChecklistItems = async () => {
     try {
@@ -49,6 +51,29 @@ const App = () => {
     }
   };
 
+  const handleAddItem = async () => {
+    try {
+      if (!newItemTitle || !newItemDescription) {
+        // Make sure both title and description are provided before adding
+        alert('Please enter both title and description');
+        return;
+      }
+
+      const newItem = { title: newItemTitle, description: newItemDescription };
+      const response = await axios.post(
+        'https://a19b-2601-285-8181-4f00-d80f-a372-c4ec-33a.ngrok-free.app/api/checklist',
+        newItem
+      );
+
+      setNewItemTitle('');
+      setNewItemDescription('');
+
+      fetchChecklistItems(); // Refresh the checklist items after adding the new item
+    } catch (error) {
+      console.error('Error adding item', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Checklist App</Text>
@@ -66,6 +91,23 @@ const App = () => {
           </View>
         ))}
       </ScrollView>
+      <View style={styles.addItemForm}>
+        <TextInput
+          style={styles.input}
+          placeholder="Title"
+          value={newItemTitle}
+          onChangeText={setNewItemTitle}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Description"
+          value={newItemDescription}
+          onChangeText={setNewItemDescription}
+        />
+        <TouchableOpacity onPress={handleAddItem}>
+          <Text style={styles.addButton}>Add Item</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -108,7 +150,7 @@ const styles = StyleSheet.create({
   },
   checkedText: {
     textDecorationLine: 'line-through',
-    color: 'gray',
+    color: 'white',
   },
   deleteButton: {
     color: 'white',
@@ -117,6 +159,30 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 8,
     paddingVertical: 4,
+  },
+  addItemForm: {
+    marginTop: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    backgroundColor: 'gray',
+  },
+  input: {
+    height: 40,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginBottom: 8,
+  },
+  addButton: {
+    backgroundColor: 'blue',
+    color: 'white',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    textAlign: 'center',
   },
 });
 
