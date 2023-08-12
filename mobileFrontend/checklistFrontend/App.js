@@ -11,7 +11,7 @@ const App = () => {
 
   const fetchChecklistItems = async () => {
     try {
-      const response = await axios.get('https://a19b-2601-285-8181-4f00-d80f-a372-c4ec-33a.ngrok-free.app/api/checklist');
+      const response = await axios.get('https://43ee-97-118-146-25.ngrok-free.app/api/checklist');
       setChecklistItems(response.data);
       const initialCheckedItems = response.data.reduce((acc, item) => {
         acc[item.id] = item.status === 'completed';
@@ -34,7 +34,7 @@ const App = () => {
         [id]: !prevCheckedItems[id],
       }));
       await axios.put(
-        `https://a19b-2601-285-8181-4f00-d80f-a372-c4ec-33a.ngrok-free.app/api/checklist/${id}`,
+        `https://43ee-97-118-146-25.ngrok-free.app/api/checklist/${id}`,
         { status: checkedItems[id] ? 'pending' : 'completed' }
       );
     } catch (error) {
@@ -44,7 +44,7 @@ const App = () => {
 
   const handleDeleteItem = async (id) => {
     try {
-      await axios.delete(`https://a19b-2601-285-8181-4f00-d80f-a372-c4ec-33a.ngrok-free.app/api/checklist/${id}`);
+      await axios.delete(`https://43ee-97-118-146-25.ngrok-free.app/api/checklist/${id}`);
       fetchChecklistItems(); // Refresh the checklist items after deleting the item
     } catch (error) {
       console.error('Error deleting item', error);
@@ -61,7 +61,7 @@ const App = () => {
 
       const newItem = { title: newItemTitle, description: newItemDescription };
       const response = await axios.post(
-        'https://a19b-2601-285-8181-4f00-d80f-a372-c4ec-33a.ngrok-free.app/api/checklist',
+        'https://43ee-97-118-146-25.ngrok-free.app/api/checklist',
         newItem
       );
 
