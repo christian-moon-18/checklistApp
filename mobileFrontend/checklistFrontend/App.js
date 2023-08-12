@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 
 import axios from 'axios';
 import CheckBox from '@react-native-community/checkbox';
 
+const NGROKURL = 'https://a5a2-97-118-146-25.ngrok-free.app';
+
 const App = () => {
   const [checklistItems, setChecklistItems] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
@@ -11,7 +13,7 @@ const App = () => {
 
   const fetchChecklistItems = async () => {
     try {
-      const response = await axios.get('https://43ee-97-118-146-25.ngrok-free.app/api/checklist');
+      const response = await axios.get('${NGROKURL}/api/checklist');
       setChecklistItems(response.data);
       const initialCheckedItems = response.data.reduce((acc, item) => {
         acc[item.id] = item.status === 'completed';
@@ -34,7 +36,7 @@ const App = () => {
         [id]: !prevCheckedItems[id],
       }));
       await axios.put(
-        `https://43ee-97-118-146-25.ngrok-free.app/api/checklist/${id}`,
+        `${NGROKURL}/api/checklist/${id}`,
         { status: checkedItems[id] ? 'pending' : 'completed' }
       );
     } catch (error) {
@@ -44,7 +46,7 @@ const App = () => {
 
   const handleDeleteItem = async (id) => {
     try {
-      await axios.delete(`https://43ee-97-118-146-25.ngrok-free.app/api/checklist/${id}`);
+      await axios.delete(`${NGROKURL}/api/checklist/${id}`);
       fetchChecklistItems(); // Refresh the checklist items after deleting the item
     } catch (error) {
       console.error('Error deleting item', error);
@@ -61,7 +63,7 @@ const App = () => {
 
       const newItem = { title: newItemTitle, description: newItemDescription };
       const response = await axios.post(
-        'https://43ee-97-118-146-25.ngrok-free.app/api/checklist',
+        '${NGROKURL}/api/checklist',
         newItem
       );
 

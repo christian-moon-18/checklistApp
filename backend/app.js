@@ -5,6 +5,7 @@ const { Pool } = require('pg');
 const app = express();
 const ngrok = require('ngrok');
 const PORT = 3001;
+const databasePassword = process.env.DATABASE_PASSWORD;
 
 app.use(express.json());
 app.use(cors());
@@ -18,7 +19,7 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'checklist_db',
-    password: 'Megustachocolate123!',
+    password: databasePassword,
     port: 5432, // Default PostgreSQL port is 5432
 });
 
