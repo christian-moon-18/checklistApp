@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import axios from 'axios';
 import CheckBox from '@react-native-community/checkbox';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const NGROKURL = 'https://a5a2-97-118-146-25.ngrok-free.app';
+const NGROKURL = 'https://3a9b-76-155-29-22.ngrok-free.app';
 
 const App = () => {
   const [checklistItems, setChecklistItems] = useState([]);
@@ -13,7 +14,7 @@ const App = () => {
 
   const fetchChecklistItems = async () => {
     try {
-      const response = await axios.get('${NGROKURL}/api/checklist');
+      const response = await axios.get(`${NGROKURL}/api/checklist`);
       setChecklistItems(response.data);
       const initialCheckedItems = response.data.reduce((acc, item) => {
         acc[item.id] = item.status === 'completed';
@@ -63,7 +64,7 @@ const App = () => {
 
       const newItem = { title: newItemTitle, description: newItemDescription };
       const response = await axios.post(
-        '${NGROKURL}/api/checklist',
+        `${NGROKURL}/api/checklist`,
         newItem
       );
 
@@ -80,18 +81,39 @@ const App = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Checklist App</Text>
       <ScrollView style={styles.scrollContainer}>
-        {checklistItems.map((item) => (
-          <View key={item.id} style={styles.checklistItem}>
-            <TouchableOpacity onPress={() => handleCheckItem(item.id)}>
-              <CheckBox value={checkedItems[item.id]} onValueChange={() => handleCheckItem(item.id)} />
-              <Text style={[styles.title, checkedItems[item.id] && styles.checkedText]}>{item.title}</Text>
-              <Text style={[styles.description, checkedItems[item.id] && styles.checkedText]}>{item.description}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleDeleteItem(item.id)}>
-              <Text style={styles.deleteButton}>Delete</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
+      {checklistItems.map((item) => (
+  <View key={item.id} style={styles.checklistItem}>
+    <View style={styles.itemLeft}>
+      <CheckBox
+        value={checkedItems[item.id]}
+        onValueChange={() => handleCheckItem(item.id)}
+      />
+      <Text
+        style={[
+          styles.title,
+          checkedItems[item.id] && styles.checkedText,
+        ]}
+      >
+        {item.title}
+      </Text>
+      <Text
+        style={[
+          styles.description,
+          checkedItems[item.id] && styles.checkedText,
+        ]}
+      >
+        {item.description}
+      </Text>
+    </View>
+    <TouchableOpacity
+      onPress={() => handleDeleteItem(item.id)}
+      style={styles.deleteButton}
+    >
+      <Icon name="delete" size={20} color="white" />
+    </TouchableOpacity>
+  </View>
+))}
+
       </ScrollView>
       <View style={styles.addItemForm}>
         <TextInput
